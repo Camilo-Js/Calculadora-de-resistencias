@@ -1,17 +1,17 @@
 const ResistanceCalculator = (() => {
     const colors = [
         { name: "Negro", value: 0, multiplier: 1, tolerance: null, tempCoeff: null, hex: "#000000" },
-        { name: "Café", value: 1, multiplier: 10, tolerance: "±1%", tempCoeff: 100, hex: "#8B4513" },
-        { name: "Rojo", value: 2, multiplier: 100, tolerance: "±2%", tempCoeff: 50, hex: "#FF0000" },
-        { name: "Naranja", value: 3, multiplier: 1000, tolerance: "±3%", tempCoeff: 15, hex: "#FFA500" },
-        { name: "Amarillo", value: 4, multiplier: 10000, tolerance: "±4%", tempCoeff: 25, hex: "#FFFF00" },
-        { name: "Verde", value: 5, multiplier: 100000, tolerance: "±0.5%", tempCoeff: 20, hex: "#008000" },
-        { name: "Azul", value: 6, multiplier: 1000000, tolerance: "±0.25%", tempCoeff: 10, hex: "#0000FF" },
-        { name: "Violeta", value: 7, multiplier: 10000000, tolerance: "±0.1%", tempCoeff: 5, hex: "#8A2BE2" },
+        { name: "Café", value: 1, multiplier: 10, tolerance: "±1%", tempCoeff: 100, hex: "#c97535" },
+        { name: "Rojo", value: 2, multiplier: 100, tolerance: "±2%", tempCoeff: 50, hex: "#ff3434" },
+        { name: "Naranja", value: 3, multiplier: 1000, tolerance: "±3%", tempCoeff: 15, hex: "#ff5733" },
+        { name: "Amarillo", value: 4, multiplier: 10000, tolerance: "±4%", tempCoeff: 25, hex: "#fbff4d" },
+        { name: "Verde", value: 5, multiplier: 100000, tolerance: "±0.5%", tempCoeff: 20, hex: "#6bff4d" },
+        { name: "Azul", value: 6, multiplier: 1000000, tolerance: "±0.25%", tempCoeff: 10, hex: "#4d57ff" },
+        { name: "Violeta", value: 7, multiplier: 10000000, tolerance: "±0.1%", tempCoeff: 5, hex: "#a54dff" },
         { name: "Gris", value: 8, multiplier: 100000000, tolerance: "±0.05%", tempCoeff: 1, hex: "#808080" },
         { name: "Blanco", value: 9, multiplier: 1000000000, tolerance: null, tempCoeff: null, hex: "#FFFFFF" },
         { name: "Dorado", value: null, multiplier: 0.1, tolerance: "±5%", tempCoeff: null, hex: "#FFD700" },
-        { name: "Plata", value: null, multiplier: 0.01, tolerance: "±10%", tempCoeff: null, hex: "#C0C0C0" }
+        { name: "Plata", value: null, multiplier: 0.01, tolerance: "±10%", tempCoeff: null, hex: "#d4d4d4" }
     ];
 
     const DOM = {
