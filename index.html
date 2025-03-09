@@ -1,69 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html> <!-- Define el tipo de documento como HTML5 -->
+<html lang="es"> <!-- Inicio del documento HTML con el idioma configurado en español -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Resistencias</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8"> <!-- Configura la codificación de caracteres para soportar caracteres especiales -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Permite que la página se adapte a dispositivos móviles -->
+    <title>Calculadora de Resistencias</title> <!-- Título de la página mostrado en la pestaña del navegador -->
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace a la hoja de estilos externa -->
 </head>
 <body>
-    <div class="main-container">
-        <header class="title-container">
-            <h1>Calculadora de Resistencias</h1>
+    <div class="main-container"> <!-- Contenedor principal de la página -->
+        <header class="title-container"> <!-- Encabezado de la página -->
+            <h1>Calculadora de Resistencias</h1> <!-- Título principal -->
         </header>
 
-        <main class="content-container">
-            <!-- Controles de selección -->
+        <main class="content-container"> <!-- Contenedor principal del contenido -->
+            <!-- Sección de selección de opciones -->
             <section class="left-container">
-                <div class="input-group">
+                <div class="input-group"> <!-- Grupo de entrada para seleccionar número de bandas -->
                     <label for="numBands">Número de franjas:</label>
-                    <select id="numBands" class="form-control">
+                    <select id="numBands" class="form-control"> <!-- Selector de número de bandas -->
                         <option value="4">4 Franjas</option>
                         <option value="5">5 Franjas</option>
                         <option value="6">6 Franjas</option>
                     </select>
                 </div>
 
-                <!-- Controles de bandas -->
+                <!-- Controles para seleccionar los colores de las bandas -->
                 <div class="band-controls">
-                    <div class="input-group" id="band1-group">
+                    <div class="input-group" id="band1-group"> <!-- Primera banda de color -->
                         <label for="band1">Franja 1:</label>
                         <select id="band1" class="band-selector"></select>
                     </div>
                     
-                    <div class="input-group" id="band2-group">
+                    <div class="input-group" id="band2-group"> <!-- Segunda banda de color -->
                         <label for="band2">Franja 2:</label>
                         <select id="band2" class="band-selector"></select>
                     </div>
 
-                    <div class="input-group hidden" id="band3-group">
+                    <div class="input-group hidden" id="band3-group"> <!-- Tercera banda (opcional) -->
                         <label for="band3">Franja 3:</label>
                         <select id="band3" class="band-selector"></select>
                     </div>
 
-                    <div class="input-group" id="multiplier-group">
+                    <div class="input-group" id="multiplier-group"> <!-- Selector del multiplicador -->
                         <label for="multiplier">Multiplicador:</label>
                         <select id="multiplier" class="band-selector"></select>
                     </div>
 
-                    <div class="input-group" id="tolerance-group">
+                    <div class="input-group" id="tolerance-group"> <!-- Selector de tolerancia -->
                         <label for="tolerance">Tolerancia:</label>
                         <select id="tolerance" class="band-selector"></select>
                     </div>
 
-                    <div class="input-group hidden" id="tempCoeff-group">
+                    <div class="input-group hidden" id="tempCoeff-group"> <!-- Selector del coeficiente térmico (opcional) -->
                         <label for="tempCoeff">Coeficiente térmico:</label>
                         <select id="tempCoeff" class="band-selector"></select>
                     </div>
                 </div>
 
-                <!-- Botón de calcular -->
+                <!-- Botón para realizar el cálculo -->
                 <button class="calculate-btn">Calcular</button>
             </section>
 
-            <!-- Visualización del resistor y resultados -->
+            <!-- Sección para visualizar el resistor y los resultados -->
             <section class="right-container">
-                <div class="resistor" data-bands="4">
+                <div class="resistor" data-bands="4"> <!-- Representación visual del resistor -->
                     <div class="band" data-band="1"></div>
                     <div class="band" data-band="2"></div>
                     <div class="band" data-band="3"></div>
@@ -72,7 +72,7 @@
                     <div class="band hidden" data-band="6"></div>
                 </div>
                 
-                <div class="results">
+                <div class="results"> <!-- Sección donde se mostrarán los resultados -->
                     <p id="resistance-value" class="result"></p>
                     <p id="calculation-procedure" class="procedure"></p>
                 </div>
@@ -80,6 +80,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Inclusión del archivo de script externo -->
 </body>
 </html>
