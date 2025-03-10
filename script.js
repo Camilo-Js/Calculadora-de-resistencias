@@ -63,7 +63,7 @@ const ResistanceCalculator = (() => {
 
     // Función para llenar un select con opciones filtradas
     const populateSelect = (selectElement, filterType) => {
-        selectElement.innerHTML = '<option value="">Seleccionar...</option>'; // Añade una opción por defecto
+        selectElement.innerHTML = '<option value="">Selecciona el color de la franja... </option>'; // Añade una opción por defecto
         
         // Filtra los colores según el tipo de filtro (valor, multiplicador, tolerancia, coeficiente térmico)
         const filteredColors = colors.filter(color => {

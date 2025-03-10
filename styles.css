@@ -58,7 +58,7 @@ select {
 
 /* Estilos para el botón de calcular */
 button {
-    background: #007bff; /* Color azul */
+    background: #000000; /* Color negro */
     color: white; /* Texto en color blanco */
     border: none; /* Sin bordes */
     padding: 0.75rem 1.5rem; /* Espaciado interno */
@@ -70,7 +70,7 @@ button {
 }
 
 button:hover {
-    background: #0056b3; /* Color más oscuro cuando el usuario pasa el mouse */
+    background: #00776d; /* Color más oscuro cuando el usuario pasa el mouse */
 }
 
 /* Estilos para la representación visual del resistor */
@@ -94,6 +94,10 @@ button:hover {
     margin: 0 2px; /* Espaciado entre bandas */
     background: transparent; /* Inicialmente sin color */
     position: relative; /* Permite ajustes de posición si es necesario */
+    border-radius: 10%;
+    border-width: 1px; /* Grosor del borde */
+    border-style: solid; /* Estilo de borde sólido */
+    border-color: black;
 }
 
 /* Ajuste de posición de las últimas bandas */
@@ -125,7 +129,7 @@ button:hover {
 #resistance-value {
     font-size: 1.5rem; /* Tamaño de fuente grande */
     font-weight: bold; /* Texto en negrita */
-    color: #007bff; /* Color azul para resaltar el resultado */
+    color: #000000; /* Color azul para resaltar el resultado */
     text-align: center; /* Mantiene el texto centrado */
 }
 
