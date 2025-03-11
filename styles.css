@@ -1,118 +1,134 @@
 /* Estilos generales */
 body {
-    font-family: Arial, sans-serif; /* Define la fuente del texto */
-    background-color: #f5f5f5; /* Color de fondo general */
-    margin: 0; /* Elimina los márgenes predeterminados */
-    padding: 0; /* Elimina el relleno predeterminado */
-    display: flex; /* Usa flexbox para centrar el contenido */
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    min-height: 100vh; /* Asegura que la página ocupe toda la altura de la ventana */
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .main-container {
-    background: white; /* Fondo blanco */
-    padding: 2rem; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
-    max-width: 1200px; /* Ancho máximo del contenedor */
-    width: 90%; /* Hace que el ancho sea el 90% del total de la pantalla */
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    width: 90%;
 }
 
 .title-container h1 {
-    font-size: 2rem; /* Tamaño del título */
-    color: #333; /* Color del texto */
-    text-align: center; /* Centra el título */
-    margin-bottom: 1.5rem; /* Espaciado inferior */
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 1.5rem;
 }
 
 .content-container {
-    display: flex; /* Usa flexbox para distribuir los elementos */
-    gap: 2rem; /* Espaciado entre elementos */
-    flex-wrap: wrap; /* Permite que los elementos se acomoden en varias líneas si es necesario */
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .left-container, .right-container {
-    flex: 1; /* Hace que ambos contenedores ocupen el mismo espacio */
-    min-width: 300px; /* Ancho mínimo para evitar que sean demasiado pequeños */
+    flex: 1;
+    min-width: 300px;
 }
 
-/* Estilos para los grupos de entrada */
 .input-group {
-    margin-bottom: 1rem; /* Espaciado entre cada grupo */
+    margin-bottom: 1rem;
 }
 
 label {
-    display: block; /* Hace que las etiquetas ocupen todo el ancho */
-    margin-bottom: 0.5rem; /* Espaciado inferior */
-    font-weight: bold; /* Hace que el texto sea más grueso */
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
 select {
-    width: 100%; /* Hace que los selectores ocupen todo el ancho disponible */
-    padding: 0.5rem; /* Espaciado interno */
-    border: 2px solid #ddd; /* Borde con color gris claro */
-    border-radius: 5px; /* Bordes redondeados */
-    font-size: 1rem; /* Tamaño de fuente */
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    appearance: none; /* Elimina la apariencia predeterminada del select */
+    background-color: white;
+    cursor: pointer;
 }
 
-/* Estilos para el botón de calcular */
+/* Estilos para las opciones del select */
+option {
+    background-color: white;
+    color: black;
+}
+
+/* Colores de las opciones */
+option[value="Negro"] { background-color: #000000; color: white; }
+option[value="Café"] { background-color: #c97535; color: white; }
+option[value="Rojo"] { background-color: #ff3434; color: white; }
+option[value="Naranja"] { background-color: #ff5733; color: white; }
+option[value="Amarillo"] { background-color: #fbff4d; color: black; }
+option[value="Verde"] { background-color: #6bff4d; color: black; }
+option[value="Azul"] { background-color: #4d57ff; color: white; }
+option[value="Violeta"] { background-color: #a54dff; color: white; }
+option[value="Gris"] { background-color: #808080; color: white; }
+option[value="Blanco"] { background-color: #FFFFFF; color: black; }
+option[value="Dorado"] { background-color: #FFD700; color: black; }
+option[value="Plata"] { background-color: #d4d4d4; color: black; }
+
 button {
-    background: #000000; /* Color negro */
-    color: white; /* Texto en color blanco */
-    border: none; /* Sin bordes */
-    padding: 0.75rem 1.5rem; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    width: 100%; /* Ocupa todo el ancho disponible */
-    font-size: 1rem; /* Tamaño de fuente */
-    margin-top: 1rem; /* Espaciado superior */
+    background: #000000;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 
 button:hover {
-    background: #00776d; /* Color más oscuro cuando el usuario pasa el mouse */
+    background: #00776d;
 }
 
-/* Estilos para la representación visual del resistor */
 .resistor {
-    display: flex; /* Usa flexbox para organizar las bandas */
-    justify-content: center; /* Centra las bandas dentro del resistor */
-    align-items: center; /* Alinea las bandas verticalmente */
-    margin: 2rem 0; /* Espaciado superior e inferior */
-    position: relative; /* Permite un posicionamiento más flexible de las bandas */
-    width: 240px; /* Ancho del resistor */
-    height: 60px; /* Altura del resistor */
-    background: #e0e0e0; /* Color de fondo gris */
-    border-radius: 30px; /* Bordes redondeados para que parezca un cilindro */
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra interna para efecto 3D */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    position: relative;
+    width: 240px;
+    height: 60px;
+    background: #e0e0e0;
+    border-radius: 30px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Estilos de las bandas de colores */
 .band {
-    width: 15px; /* Ancho de cada banda */
-    height: 100%; /* Ocupar toda la altura del resistor */
-    margin: 0 2px; /* Espaciado entre bandas */
-    background: transparent; /* Inicialmente sin color */
-    position: relative; /* Permite ajustes de posición si es necesario */
+    width: 15px;
+    height: 100%;
+    margin: 0 2px;
+    background: transparent;
+    position: relative;
     border-radius: 10%;
-    border-width: 1px; /* Grosor del borde */
-    border-style: solid; /* Estilo de borde sólido */
+    border-width: 1px;
+    border-style: solid;
     border-color: black;
 }
 
-/* Ajuste de posición de las últimas bandas */
 .band[data-band="4"],
 .band[data-band="5"],
 .band[data-band="6"] {
-    margin-right: 20px; /* Añade separación a la última banda */
+    margin-right: 20px;
 }
 
-/* Ocultar elementos cuando no son necesarios */
 .hidden {
     display: none;
 }
 
-/* Estilos para la sección de resultados */
 .right-container {
     display: flex;
     flex-direction: column;
@@ -121,28 +137,28 @@ button:hover {
 }
 
 .results {
-    margin-top: 0.1rem; /* Espaciado superior */
-    text-align: left; /* Alinea el texto a la izquierda */
-    width: 100%; /* Ocupa todo el ancho disponible */
+    margin-top: 0.1rem;
+    text-align: left;
+    width: 100%;
 }
 
 #resistance-value {
-    font-size: 1.5rem; /* Tamaño de fuente grande */
-    font-weight: bold; /* Texto en negrita */
-    color: #000000; /* Color azul para resaltar el resultado */
-    text-align: center; /* Mantiene el texto centrado */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
 }
 
 #calculation-procedure {
-    padding: 1rem; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-top: 0.5rem; /* Espaciado superior */
-    line-height: 1.6; /* Espaciado entre líneas */
-    text-align: left; /* Alineación del texto */
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+    text-align: left;
 }
 
 #calculation-procedure strong {
-    display: block; /* Hace que el título del procedimiento ocupe una línea completa */
-    text-align: center; /* Centra el título */
-    margin-bottom: 0.5rem; /* Espaciado inferior */
+    display: block;
+    text-align: center;
+    margin-bottom: 0.5rem;
 }

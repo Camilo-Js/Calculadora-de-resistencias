@@ -1,5 +1,4 @@
 const ResistanceCalculator = (() => {
-    // Definición de los colores y sus valores asociados
     const colors = [
         { name: "Negro", value: 0, multiplier: 1, tolerance: null, tempCoeff: null, hex: "#000000" },
         { name: "Café", value: 1, multiplier: 10, tolerance: "±1%", tempCoeff: 100, hex: "#c97535" },
@@ -15,7 +14,6 @@ const ResistanceCalculator = (() => {
         { name: "Plata", value: null, multiplier: 0.01, tolerance: "±10%", tempCoeff: null, hex: "#d4d4d4" }
     ];
 
-    // Selección de elementos del DOM
     const DOM = {
         numBands: document.getElementById("numBands"),
         band1: document.getElementById("band1"),
@@ -30,7 +28,6 @@ const ResistanceCalculator = (() => {
         calculateBtn: document.querySelector(".calculate-btn")
     };
 
-    // Función de inicialización
     const init = () => {
         if (!DOM.numBands || !DOM.band1 || !DOM.band2 || !DOM.multiplier || !DOM.tolerance || !DOM.resistor || !DOM.result || !DOM.procedure || !DOM.calculateBtn) {
             console.error("Error: Uno o más elementos DOM no se encontraron.");
@@ -41,7 +38,6 @@ const ResistanceCalculator = (() => {
         updateBands();
     };
 
-    // Configuración de event listeners
     const setupEventListeners = () => {
         DOM.numBands.addEventListener("change", updateBands);
         DOM.calculateBtn.addEventListener("click", calculateResistance);
@@ -50,7 +46,6 @@ const ResistanceCalculator = (() => {
         });
     };
 
-    // Llenado de los selects iniciales
     const populateInitialSelects = () => {
         populateSelect(DOM.band1, 'value');
         populateSelect(DOM.band2, 'value');
@@ -60,7 +55,6 @@ const ResistanceCalculator = (() => {
         populateSelect(DOM.tempCoeff, 'tempCoeff');
     };
 
-    // Función para llenar un select con opciones filtradas
     const populateSelect = (selectElement, filterType) => {
         selectElement.innerHTML = '<option value="">Selecciona el color de la franja...</option>';
         const filteredColors = colors.filter(color => {
@@ -85,7 +79,6 @@ const ResistanceCalculator = (() => {
         });
     };
 
-    // Actualización de las bandas del resistor según el número de bandas seleccionado
     const updateBands = () => {
         const numBands = parseInt(DOM.numBands.value);
         document.getElementById("band3-group").classList.toggle("hidden", numBands < 5);
@@ -96,7 +89,6 @@ const ResistanceCalculator = (() => {
         updateResistor();
     };
 
-    // Actualización de la representación visual del resistor
     const updateResistor = () => {
         const getColorHex = (select) => {
             const selected = select.selectedOptions[0];
@@ -121,7 +113,6 @@ const ResistanceCalculator = (() => {
         });
     };
 
-    // Función para validar si todas las bandas están seleccionadas
     const validateBands = () => {
         const numBands = parseInt(DOM.numBands.value);
         const missingBands = [];
@@ -134,16 +125,15 @@ const ResistanceCalculator = (() => {
         if (numBands === 6 && !DOM.tempCoeff.value) missingBands.push("Coeficiente térmico");
 
         if (missingBands.length > 0) {
-            DOM.result.textContent = "Te falta seleccionar las siguientes bandas:";
+            DOM.result.textContent = "Error: Faltan seleccionar las siguientes bandas:";
             DOM.procedure.innerHTML = missingBands.map(band => `<p style="color: red;">• ${band}</p>`).join("");
             return false;
         }
         return true;
     };
 
-    // Función para calcular la resistencia
     const calculateResistance = () => {
-        if (!validateBands()) return; // Si falta alguna banda, no se realiza el cálculo
+        if (!validateBands()) return;
 
         const getSelectedValue = (select) => {
             const option = select.selectedOptions[0];
