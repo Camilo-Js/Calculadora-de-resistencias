@@ -134,7 +134,7 @@ const ResistanceCalculator = (() => {
         if (numBands === 6 && !DOM.tempCoeff.value) missingBands.push("Coeficiente térmico");
 
         if (missingBands.length > 0) {
-            DOM.result.textContent = "Error: Faltan seleccionar las siguientes bandas:";
+            DOM.result.textContent = "Te falta seleccionar las siguientes bandas:";
             DOM.procedure.innerHTML = missingBands.map(band => `<p style="color: red;">• ${band}</p>`).join("");
             return false;
         }
