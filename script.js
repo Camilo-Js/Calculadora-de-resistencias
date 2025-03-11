@@ -17,158 +17,161 @@ const ResistanceCalculator = (() => {
 
     // Selección de elementos del DOM
     const DOM = {
-        numBands: document.getElementById("numBands"), // Selector de número de bandas
-        band1: document.getElementById("band1"), // Selector de la primera banda
-        band2: document.getElementById("band2"), // Selector de la segunda banda
-        band3: document.getElementById("band3"), // Selector de la tercera banda (opcional)
-        multiplier: document.getElementById("multiplier"), // Selector del multiplicador
-        tolerance: document.getElementById("tolerance"), // Selector de tolerancia
-        tempCoeff: document.getElementById("tempCoeff"), // Selector del coeficiente térmico (opcional)
-        resistor: document.querySelector(".resistor"), // Representación visual del resistor
-        result: document.getElementById("resistance-value"), // Elemento para mostrar el valor de la resistencia
-        procedure: document.getElementById("calculation-procedure"), // Elemento para mostrar el procedimiento de cálculo
-        calculateBtn: document.querySelector(".calculate-btn") // Botón para calcular la resistencia
+        numBands: document.getElementById("numBands"),
+        band1: document.getElementById("band1"),
+        band2: document.getElementById("band2"),
+        band3: document.getElementById("band3"),
+        multiplier: document.getElementById("multiplier"),
+        tolerance: document.getElementById("tolerance"),
+        tempCoeff: document.getElementById("tempCoeff"),
+        resistor: document.querySelector(".resistor"),
+        result: document.getElementById("resistance-value"),
+        procedure: document.getElementById("calculation-procedure"),
+        calculateBtn: document.querySelector(".calculate-btn")
     };
 
     // Función de inicialización
     const init = () => {
-        // Verifica si todos los elementos del DOM están presentes
         if (!DOM.numBands || !DOM.band1 || !DOM.band2 || !DOM.multiplier || !DOM.tolerance || !DOM.resistor || !DOM.result || !DOM.procedure || !DOM.calculateBtn) {
             console.error("Error: Uno o más elementos DOM no se encontraron.");
             return;
         }
-        setupEventListeners(); // Configura los event listeners
-        populateInitialSelects(); // Llena los selects iniciales
-        updateBands(); // Actualiza las bandas del resistor
+        setupEventListeners();
+        populateInitialSelects();
+        updateBands();
     };
 
     // Configuración de event listeners
     const setupEventListeners = () => {
-        DOM.numBands.addEventListener("change", updateBands); // Escucha cambios en el número de bandas
-        DOM.calculateBtn.addEventListener("click", calculateResistance); // Escucha clics en el botón de calcular
+        DOM.numBands.addEventListener("change", updateBands);
+        DOM.calculateBtn.addEventListener("click", calculateResistance);
         document.querySelectorAll(".band-selector").forEach(select => {
-            select.addEventListener("change", updateResistor); // Escucha cambios en los selectores de bandas
+            select.addEventListener("change", updateResistor);
         });
     };
 
     // Llenado de los selects iniciales
     const populateInitialSelects = () => {
-        populateSelect(DOM.band1, 'value'); // Llena el selector de la primera banda
-        populateSelect(DOM.band2, 'value'); // Llena el selector de la segunda banda
-        populateSelect(DOM.band3, 'value'); // Llena el selector de la tercera banda
-        populateSelect(DOM.multiplier, 'multiplier'); // Llena el selector del multiplicador
-        populateSelect(DOM.tolerance, 'tolerance'); // Llena el selector de tolerancia
-        populateSelect(DOM.tempCoeff, 'tempCoeff'); // Llena el selector del coeficiente térmico
+        populateSelect(DOM.band1, 'value');
+        populateSelect(DOM.band2, 'value');
+        populateSelect(DOM.band3, 'value');
+        populateSelect(DOM.multiplier, 'multiplier');
+        populateSelect(DOM.tolerance, 'tolerance');
+        populateSelect(DOM.tempCoeff, 'tempCoeff');
     };
 
     // Función para llenar un select con opciones filtradas
     const populateSelect = (selectElement, filterType) => {
-        selectElement.innerHTML = '<option value="">Selecciona el color de la franja... </option>'; // Añade una opción por defecto
-        
-        // Filtra los colores según el tipo de filtro (valor, multiplicador, tolerancia, coeficiente térmico)
+        selectElement.innerHTML = '<option value="">Selecciona el color de la franja...</option>';
         const filteredColors = colors.filter(color => {
             switch(filterType) {
-                case 'value': return color.value !== null; // Filtra colores con valor
-                case 'multiplier': return color.multiplier !== null; // Filtra colores con multiplicador
-                case 'tolerance': return color.tolerance !== null; // Filtra colores con tolerancia
-                case 'tempCoeff': return color.tempCoeff !== null; // Filtra colores con coeficiente térmico
+                case 'value': return color.value !== null;
+                case 'multiplier': return color.multiplier !== null;
+                case 'tolerance': return color.tolerance !== null;
+                case 'tempCoeff': return color.tempCoeff !== null;
                 default: return false;
             }
         });
-
-        // Añade las opciones filtradas al select
         filteredColors.forEach(color => {
             const option = document.createElement("option");
-            option.value = color.name; // Valor de la opción
-            option.textContent = color.name; // Texto de la opción
-            option.dataset.hex = color.hex; // Almacena el color en formato hexadecimal
-            option.dataset.value = color.value ?? ''; // Almacena el valor numérico
-            option.dataset.multiplier = color.multiplier ?? ''; // Almacena el multiplicador
-            option.dataset.tolerance = color.tolerance ?? ''; // Almacena la tolerancia
-            option.dataset.tempCoeff = color.tempCoeff ?? ''; // Almacena el coeficiente térmico
-            selectElement.appendChild(option); // Añade la opción al select
+            option.value = color.name;
+            option.textContent = color.name;
+            option.dataset.hex = color.hex;
+            option.dataset.value = color.value ?? '';
+            option.dataset.multiplier = color.multiplier ?? '';
+            option.dataset.tolerance = color.tolerance ?? '';
+            option.dataset.tempCoeff = color.tempCoeff ?? '';
+            selectElement.appendChild(option);
         });
     };
 
     // Actualización de las bandas del resistor según el número de bandas seleccionado
     const updateBands = () => {
-        const numBands = parseInt(DOM.numBands.value); // Obtiene el número de bandas seleccionado
-        
-        // Muestra u oculta los controles según el número de bandas
-        document.getElementById("band3-group").classList.toggle("hidden", numBands < 5); // Oculta la tercera banda si hay menos de 5 bandas
-        document.getElementById("tempCoeff-group").classList.toggle("hidden", numBands !== 6); // Oculta el coeficiente térmico si no hay 6 bandas
-        DOM.resistor.setAttribute("data-bands", numBands); // Actualiza el atributo de bandas en el resistor
-        
-        // Actualiza los selects si es necesario
-        if(numBands >= 5) populateSelect(DOM.band3, 'value'); // Llena la tercera banda si hay 5 o más bandas
-        if(numBands === 6) populateSelect(DOM.tempCoeff, 'tempCoeff'); // Llena el coeficiente térmico si hay 6 bandas
-        
-        updateResistor(); // Actualiza la representación visual del resistor
+        const numBands = parseInt(DOM.numBands.value);
+        document.getElementById("band3-group").classList.toggle("hidden", numBands < 5);
+        document.getElementById("tempCoeff-group").classList.toggle("hidden", numBands !== 6);
+        DOM.resistor.setAttribute("data-bands", numBands);
+        if(numBands >= 5) populateSelect(DOM.band3, 'value');
+        if(numBands === 6) populateSelect(DOM.tempCoeff, 'tempCoeff');
+        updateResistor();
     };
 
     // Actualización de la representación visual del resistor
     const updateResistor = () => {
         const getColorHex = (select) => {
-            const selected = select.selectedOptions[0]; // Obtiene la opción seleccionada
-            return selected ? selected.dataset.hex : 'transparent'; // Devuelve el color hexadecimal o transparente si no hay selección
+            const selected = select.selectedOptions[0];
+            return selected ? selected.dataset.hex : 'transparent';
         };
-
-        const bands = DOM.resistor.querySelectorAll(".band"); // Obtiene todas las bandas del resistor
-        const numBands = parseInt(DOM.numBands.value); // Obtiene el número de bandas seleccionado
-        
-        // Actualiza los colores de las bandas según las selecciones
-        bands[0].style.backgroundColor = getColorHex(DOM.band1); // Primera banda
-        bands[1].style.backgroundColor = getColorHex(DOM.band2); // Segunda banda
-        bands[2].style.backgroundColor = numBands >= 5 ? getColorHex(DOM.band3) : getColorHex(DOM.multiplier); // Tercera banda o multiplicador
-        bands[3].style.backgroundColor = numBands >= 5 ? getColorHex(DOM.multiplier) : getColorHex(DOM.tolerance); // Multiplicador o tolerancia
-        
+        const bands = DOM.resistor.querySelectorAll(".band");
+        const numBands = parseInt(DOM.numBands.value);
+        bands[0].style.backgroundColor = getColorHex(DOM.band1);
+        bands[1].style.backgroundColor = getColorHex(DOM.band2);
+        bands[2].style.backgroundColor = numBands >= 5 ? getColorHex(DOM.band3) : getColorHex(DOM.multiplier);
+        bands[3].style.backgroundColor = numBands >= 5 ? getColorHex(DOM.multiplier) : getColorHex(DOM.tolerance);
         if(numBands >= 5) {
-            bands[4].style.backgroundColor = getColorHex(DOM.tolerance); // Tolerancia si hay 5 o más bandas
-            bands[4].classList.remove("hidden"); // Muestra la cuarta banda
+            bands[4].style.backgroundColor = getColorHex(DOM.tolerance);
+            bands[4].classList.remove("hidden");
         }
-        
         if(numBands === 6) {
-            bands[5].style.backgroundColor = getColorHex(DOM.tempCoeff); // Coeficiente térmico si hay 6 bandas
-            bands[5].classList.remove("hidden"); // Muestra la quinta banda
+            bands[5].style.backgroundColor = getColorHex(DOM.tempCoeff);
+            bands[5].classList.remove("hidden");
         }
-        
-        // Oculta las bandas no utilizadas
         bands.forEach((band, index) => {
-            if(index >= numBands) band.classList.add("hidden"); // Oculta las bandas que no se usan
+            if(index >= numBands) band.classList.add("hidden");
         });
+    };
+
+    // Función para validar si todas las bandas están seleccionadas
+    const validateBands = () => {
+        const numBands = parseInt(DOM.numBands.value);
+        const missingBands = [];
+
+        if (!DOM.band1.value) missingBands.push("Franja 1");
+        if (!DOM.band2.value) missingBands.push("Franja 2");
+        if (numBands >= 5 && !DOM.band3.value) missingBands.push("Franja 3");
+        if (!DOM.multiplier.value) missingBands.push("Multiplicador");
+        if (!DOM.tolerance.value) missingBands.push("Tolerancia");
+        if (numBands === 6 && !DOM.tempCoeff.value) missingBands.push("Coeficiente térmico");
+
+        if (missingBands.length > 0) {
+            DOM.result.textContent = "Error: Faltan seleccionar las siguientes bandas:";
+            DOM.procedure.innerHTML = missingBands.map(band => `<p style="color: red;">• ${band}</p>`).join("");
+            return false;
+        }
+        return true;
     };
 
     // Función para calcular la resistencia
     const calculateResistance = () => {
+        if (!validateBands()) return; // Si falta alguna banda, no se realiza el cálculo
+
         const getSelectedValue = (select) => {
-            const option = select.selectedOptions[0]; // Obtiene la opción seleccionada
+            const option = select.selectedOptions[0];
             return option ? {
-                value: parseFloat(option.dataset.value), // Valor numérico
-                multiplier: parseFloat(option.dataset.multiplier), // Multiplicador
-                tolerance: option.dataset.tolerance, // Tolerancia
-                name: option.value // Nombre del color
+                value: parseFloat(option.dataset.value),
+                multiplier: parseFloat(option.dataset.multiplier),
+                tolerance: option.dataset.tolerance,
+                name: option.value
             } : null;
         };
 
-        const numBands = parseInt(DOM.numBands.value); // Obtiene el número de bandas seleccionado
-        let resistanceValue = 0; // Valor de la resistencia
-        let procedureSteps = []; // Pasos del procedimiento de cálculo
-        
-        try {
-            const band1 = getSelectedValue(DOM.band1); // Obtiene los valores de la primera banda
-            const band2 = getSelectedValue(DOM.band2); // Obtiene los valores de la segunda banda
-            const band3 = getSelectedValue(DOM.band3); // Obtiene los valores de la tercera banda (si existe)
-            const multiplier = getSelectedValue(DOM.multiplier); // Obtiene los valores del multiplicador
-            const tolerance = getSelectedValue(DOM.tolerance); // Obtiene los valores de la tolerancia
-            const tempCoeff = getSelectedValue(DOM.tempCoeff); // Obtiene los valores del coeficiente térmico (si existe)
+        const numBands = parseInt(DOM.numBands.value);
+        let resistanceValue = 0;
+        let procedureSteps = [];
 
-            // Validación de selecciones
+        try {
+            const band1 = getSelectedValue(DOM.band1);
+            const band2 = getSelectedValue(DOM.band2);
+            const band3 = getSelectedValue(DOM.band3);
+            const multiplier = getSelectedValue(DOM.multiplier);
+            const tolerance = getSelectedValue(DOM.tolerance);
+            const tempCoeff = getSelectedValue(DOM.tempCoeff);
+
             if(!band1 || !band2 || !multiplier) throw new Error("Selecciona todas las bandas requeridas");
 
-            // Cálculo principal según el número de bandas
             switch(numBands) {
                 case 4:
-                    resistanceValue = (band1.value * 10 + band2.value) * multiplier.multiplier; // Cálculo para 4 bandas
+                    resistanceValue = (band1.value * 10 + band2.value) * multiplier.multiplier;
                     procedureSteps = [
                         `• Primera banda (${band1.name}): ${band1.value}`,
                         `• Segunda banda (${band2.name}): ${band2.value}`,
@@ -177,9 +180,8 @@ const ResistanceCalculator = (() => {
                         `• Tolerancia: ${tolerance?.tolerance || 'No especificada'}`
                     ];
                     break;
-                    
                 case 5:
-                    resistanceValue = (band1.value * 100 + band2.value * 10 + band3.value) * multiplier.multiplier; // Cálculo para 5 bandas
+                    resistanceValue = (band1.value * 100 + band2.value * 10 + band3.value) * multiplier.multiplier;
                     procedureSteps = [
                         `• Primera banda (${band1.name}): ${band1.value}`,
                         `• Segunda banda (${band2.name}): ${band2.value}`,
@@ -189,9 +191,8 @@ const ResistanceCalculator = (() => {
                         `• Tolerancia: ${tolerance?.tolerance || 'No especificada'}`
                     ];
                     break;
-                    
                 case 6:
-                    resistanceValue = (band1.value * 100 + band2.value * 10 + band3.value) * multiplier.multiplier; // Cálculo para 6 bandas
+                    resistanceValue = (band1.value * 100 + band2.value * 10 + band3.value) * multiplier.multiplier;
                     procedureSteps = [
                         `• Primera banda (${band1.name}): ${band1.value}`,
                         `• Segunda banda (${band2.name}): ${band2.value}`,
@@ -204,33 +205,29 @@ const ResistanceCalculator = (() => {
                     break;
             }
 
-            // Cálculo del rango de tolerancia
-            const toleranceValue = tolerance ? parseFloat(tolerance.tolerance.replace('±', '').replace('%', '')) : 0; // Obtiene el valor de tolerancia
-            const minResistance = resistanceValue * (1 - toleranceValue / 100); // Calcula el valor mínimo
-            const maxResistance = resistanceValue * (1 + toleranceValue / 100); // Calcula el valor máximo
-            procedureSteps.push(`• Rango de tolerancia: ${minResistance}Ω - ${maxResistance}Ω`); // Añade el rango al procedimiento
+            const toleranceValue = tolerance ? parseFloat(tolerance.tolerance.replace('±', '').replace('%', '')) : 0;
+            const minResistance = resistanceValue * (1 - toleranceValue / 100);
+            const maxResistance = resistanceValue * (1 + toleranceValue / 100);
+            procedureSteps.push(`• Rango de tolerancia: ${minResistance}Ω - ${maxResistance}Ω`);
 
-            // Formateo del resultado
-            const formatted = resistanceValue.toLocaleString('es-ES'); // Formatea el valor de la resistencia
-            const toleranceText = tolerance ? ` ${tolerance.tolerance}` : ''; // Añade la tolerancia si existe
+            const formatted = resistanceValue.toLocaleString('es-ES');
+            const toleranceText = tolerance ? ` ${tolerance.tolerance}` : '';
 
-            // Muestra los resultados en el DOM
-            DOM.result.textContent = `${formatted}Ω${toleranceText}`; // Muestra el valor de la resistencia
+            DOM.result.textContent = `${formatted}Ω${toleranceText}`;
             DOM.procedure.innerHTML = `
                 <strong>Procedimiento de cálculo:</strong><br>
                 ${procedureSteps.join('<br>')}
-            `; // Muestra el procedimiento de cálculo
+            `;
 
         } catch (error) {
-            DOM.result.textContent = error.message; // Muestra un mensaje de error si algo falla
-            DOM.procedure.textContent = ""; // Limpia el procedimiento
+            DOM.result.textContent = error.message;
+            DOM.procedure.textContent = "";
         }
     };
 
-    return { init }; // Expone la función de inicialización
+    return { init };
 })();
 
-// Inicialización de la calculadora al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    ResistanceCalculator.init(); // Llama a la función de inicialización
+    ResistanceCalculator.init();
 });
